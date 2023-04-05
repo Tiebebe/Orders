@@ -29,7 +29,8 @@ public class OrderRepository : IOrderRepository
 
     public async Task<Order> UpdateOrder(Order order)
     {
-        var originalOrder = await _context.Orders.FindAsync(order.Id);
+        var originalOrder = await _context.Orders.Include(o => o.Items)
+            .FirstOrDefaultAsync( o => o.Id == order.Id);
 
         if (originalOrder == null)
         {

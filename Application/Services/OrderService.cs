@@ -16,9 +16,9 @@ public class OrderService : IOrdersService
     {
         ValidateNewOrder(order);
         var addedOrder = await _ordersRepository.AddAsync(order);
-        _cacheService.Remove($"Order_{order.Id}"); 
+        _cacheService.Remove($"Order_{addedOrder.Id}"); 
         //Better to have the cache timespan in appsettings
-        _cacheService.Set($"Order_{order.Id}", addedOrder, TimeSpan.FromMinutes(30)); 
+        _cacheService.Set($"Order_{addedOrder.Id}", addedOrder, TimeSpan.FromMinutes(30)); 
         return addedOrder;
     }
 
