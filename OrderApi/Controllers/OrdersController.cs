@@ -62,6 +62,7 @@ public class OrdersController : ControllerBase
     [HttpPatch("{orderId}")]
     public async Task<IActionResult> UpdateOrder(int orderId, [FromBody] JsonPatchDocument<Order> patchDocument)
     {
+        //Example request
         //[
         //  {
         //    "path": "/customerId",
@@ -70,11 +71,11 @@ public class OrdersController : ControllerBase
         //  }
         //]
         //https://learn.microsoft.com/en-us/aspnet/core/web-api/jsonpatch?view=aspnetcore-7.0
-        if (patchDocument != null)
+        if (patchDocument is not null)
         {
             var order = await _service.GetOrder(orderId);
 
-            if (order == null)
+            if (order is null)
             {
                 return NotFound();
             }
@@ -88,7 +89,7 @@ public class OrdersController : ControllerBase
         }
         else
         {
-            return BadRequest(ModelState);
+            return BadRequest("Can not accept null!");
         }
     }
     [HttpDelete]
@@ -103,7 +104,7 @@ public class OrdersController : ControllerBase
     private bool ValidateUpdateRequest(JsonPatchDocument<Order> patchDocument, Order order)
     {
         //some validation logic for the updates.  This is just one example
-        var validStatuses = new[] { OrderStatus.Created, OrderStatus.Completed, OrderStatus.TooLatetoEdit };
+        var validStatuses = new[] { OrderStatus.Created, OrderStatus.ProcessThatAllowsEditing };
 
         return validStatuses.Contains(order.Status);
     }

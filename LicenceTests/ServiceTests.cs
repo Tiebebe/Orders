@@ -17,10 +17,11 @@ public class ApplicationTests : IClassFixture<TestFixture>
         _fixture = fixture;
         _service = _fixture.ServiceProvider.GetService<IOrdersService>();
         _context = _fixture.ServiceProvider.GetService<OrdersContext>();
+        //Better to test the API instead ?
     }
 
     [Fact]
-    public async Task WhenCreatingNewOrder_WithOrderItems_ReturnSpecificOrderBasedOnUniqueIdentifier()
+    public async Task GetOrder_BySpecificIdentifier_ReturnsOrderCorrectly()
     {
         // Arrange
         var customer1Id = Guid.NewGuid().ToString();
@@ -59,9 +60,8 @@ public class ApplicationTests : IClassFixture<TestFixture>
     [Fact]
     public async Task WhenSeveralOrdersAreCreated_GetOrders_ReturnAllOrders()
     {
-        CleanDb();
         // Arrange
-
+        CleanDb();
         var numberOfOrdersToCreate = 10;
         for (var i = 0; i < numberOfOrdersToCreate; i++)
         {
@@ -81,9 +81,9 @@ public class ApplicationTests : IClassFixture<TestFixture>
     [Fact]
     public async Task UpdatingCustomerId_OnAnExistingOrder_WorksProperly()
     {
-        CleanDb();
-        // Arrange
 
+        // Arrange
+        CleanDb();
         var customerId = Guid.NewGuid().ToString();
         var customerId2 = Guid.NewGuid().ToString();
         var order1 = CreateOrderWithItems(customerId);
