@@ -1,0 +1,19 @@
+﻿using Application.Contracts;
+
+namespace Application.Services;
+
+public class RedisCacheService : ICacheService
+{
+    public void Remove(string cacheKey)
+    {
+        throw new NotImplementedException();
+    }
+    public void Set<T>(string cacheKey, T value, TimeSpan timespan)
+    {
+        throw new NotImplementedException();
+    }
+    public bool TryGet<T>(string cacheKey, out T? value)
+    {
+        throw new NotImplementedException();
+    }
+}
